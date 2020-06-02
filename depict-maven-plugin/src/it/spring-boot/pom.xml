@@ -16,9 +16,8 @@
                 <executions>
                     <execution>
                         <id>dependency</id>
-                        <phase>package</phase>
                         <goals>
-                            <goal>export</goal>
+                            <goal>dependencies</goal>
                         </goals>
                     </execution>
                 </executions>
