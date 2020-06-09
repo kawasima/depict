@@ -4,16 +4,24 @@
 
     <groupId>net.unit8.depict</groupId>
     <artifactId>depict-maven-plugin</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
+    <parent>
+        <groupId>net.unit8.depict</groupId>
+        <artifactId>depict-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
     <name>depict-maven-plugin</name>
     <url>https://github.com/kawasima/depict.git</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
-        <jackson.version>2.10.2</jackson.version>
+        <!--
+            <jackson.version>2.10.2</jackson.version>
+            for Java6 support
+        -->
+        <jackson.version>2.7.9.7</jackson.version>
         <maven.version>2.0.11</maven.version>
     </properties>
 
@@ -31,7 +39,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>        
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -140,6 +148,6 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>        
-    </profiles>    
+        </profile>
+    </profiles>
 </project>

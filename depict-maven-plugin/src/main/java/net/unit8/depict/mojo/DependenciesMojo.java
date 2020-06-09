@@ -3,18 +3,14 @@ package net.unit8.depict.mojo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
-import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.ProjectBuildingException;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Listing dependencies.
@@ -24,7 +20,7 @@ import java.util.List;
  * @requiresProject true
  * @requiresDependencyResolution test
  */
-class DependenciesMojo extends AbstractMojo {
+public class DependenciesMojo extends AbstractMojo {
 
     /**
      * @parameter expression="${project}"
