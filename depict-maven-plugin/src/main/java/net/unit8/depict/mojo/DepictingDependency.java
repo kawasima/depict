@@ -11,6 +11,7 @@ import java.io.Serializable;
  * Requires
  */
 public class DepictingDependency implements Serializable {
+    private static final long serialVersionUID = -6666876811712047374L;
     private final String groupId;
     private final String artifactId;
     private final String version;
