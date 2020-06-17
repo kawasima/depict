@@ -1,0 +1,24 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.unit8.depict', name: 'depict-gradle-plugin', version: '0.1.0-SNAPSHOT'
+    }
+}
+
+group = 'net.unit8.depict.example'
+
+apply plugin: 'java'
+//apply plugin: 'maven-publish'
+apply plugin: 'net.unit8.depict'
+
+repositories {
+    mavenLocal()
+}
+dependencies {
+    // https://mvnrepository.com/artifact/org.apache.struts/struts2-core
+    //implementation group: 'org.apache.struts', name: 'struts2-core', version: 'latest.release'
+    implementation group: 'org.apache.struts', name: 'struts2-core', version: '2.5.18'
+}

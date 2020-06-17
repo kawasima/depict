@@ -17,11 +17,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
+        <jackson.version>2.11.0</jackson.version>
         <!--
-            <jackson.version>2.10.2</jackson.version>
             for Java6 support
-        -->
         <jackson.version>2.7.9.7</jackson.version>
+        -->
         <maven.version>2.0.11</maven.version>
     </properties>
 
