@@ -1,7 +1,5 @@
 # depict-maven-plugin
 
-[日本語](./README.ja.md)
-
 ## requirements
 
 - Java6 or higher
@@ -11,7 +9,9 @@
 
 ### dependencies
 
-Add the setting to your pom.xml.
+依存関係をすべて出力します。
+
+pom.xmlの project > build > plugins に以下の設定を書き加えてください
 
 ```xml
             <plugin>
@@ -29,4 +29,4 @@ Add the setting to your pom.xml.
             </plugin>
 ```
 
-When you execute `mvn package`, the plugin writes all dependencies to a `depice.dependencies.json` file.
+デフォルトのゴールは package なので、 `mvn package` を実行すると、プロジェクト直下に `depict.dependencies.json` が出力されます。

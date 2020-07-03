@@ -11,8 +11,15 @@ buildscript {
 group = 'net.unit8.depict.example'
 
 apply plugin: 'java'
-//apply plugin: 'maven-publish'
 apply plugin: 'net.unit8.depict'
+
+task depictDependencies {//(type: net.unit8.depict.gradle.task.DependenciesTask) {
+    outputFile = file('hoge.json')
+}
+
+task assembly {
+    dependsOn('depictDependencies')
+}
 
 repositories {
     mavenLocal()

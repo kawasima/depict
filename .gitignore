@@ -44,3 +44,6 @@ buildNumber.properties
 .settings
 .project
 .gradle/
+
+# output
+depict.dependencies.json

@@ -16,6 +16,7 @@ import org.codehaus.plexus.PlexusConstants;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.provider.Provider;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.File;
@@ -24,15 +25,17 @@ import java.io.IOException;
 import java.net.URI;
 
 public class DependenciesTask extends DefaultTask {
-    File outputFile = new File("depict.dependencies.json");
+    @OutputFile
+    File outputFile;
+    private ObjectMapper mapper = new ObjectMapper();
 
     @TaskAction
     public void dependencies() {
-        ObjectMapper mapper = new ObjectMapper();
         URI localRepositoryURL = getProject().getRepositories().mavenLocal().getUrl();
         Provider<RegularFile> pom = getProject().getLayout().getBuildDirectory().file("publications/depict/pom-default.xml");
         FileOutputStream fos = null;
         try {
+            // create a Plexus container
             ContainerConfiguration cc = new DefaultContainerConfiguration()
                     .setClassPathScanning(PlexusConstants.SCANNING_INDEX)
                     .setAutoWiring(true)
@@ -64,5 +67,17 @@ public class DependenciesTask extends DefaultTask {
                 }
             }
         }
+    }
+
+    public File getOutputFile() {
+        if (outputFile == null) {
+            return new File("depict.dependencies.json");
+        } else {
+            return outputFile;
+        }
+    }
+
+    public void setOutputFile(File outputFile) {
+        this.outputFile = outputFile;
     }
 }

@@ -16,7 +16,6 @@ import org.gradle.api.plugins.AppliedPlugin;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlatformPlugin;
 import org.gradle.api.plugins.PluginManager;
-import org.gradle.api.provider.Provider;
 import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.publish.internal.versionmapping.DefaultVersionMappingStrategy;
 import org.gradle.api.publish.internal.versionmapping.VersionMappingStrategyInternal;
@@ -25,11 +24,9 @@ import org.gradle.api.publish.maven.MavenPom;
 import org.gradle.api.publish.maven.MavenPublication;
 import org.gradle.api.publish.maven.internal.artifact.MavenArtifactNotationParserFactory;
 import org.gradle.api.publish.maven.internal.publication.DefaultMavenPublication;
-import org.gradle.api.publish.maven.internal.publication.MavenPomInternal;
 import org.gradle.api.publish.maven.internal.publication.MavenPublicationInternal;
 import org.gradle.api.publish.maven.internal.publication.WritableMavenProjectIdentity;
 import org.gradle.api.publish.maven.internal.publisher.MutableMavenProjectIdentity;
-import org.gradle.api.publish.maven.internal.tasks.MavenPomFileGenerator;
 import org.gradle.api.publish.maven.tasks.GenerateMavenPom;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
@@ -41,6 +38,11 @@ import org.gradle.internal.typeconversion.NotationParser;
 import javax.inject.Inject;
 import java.util.concurrent.Callable;
 
+/**
+ * Gradle plugin for Depict.
+ *
+ * @author kawasima
+ */
 public class DepictPlugin implements Plugin<Project> {
     private final InstantiatorFactory instantiatorFactory;
     private final ObjectFactory objectFactory;
@@ -50,8 +52,12 @@ public class DepictPlugin implements Plugin<Project> {
     private final ProviderFactory providerFactory;
 
     @Inject
-    public DepictPlugin(InstantiatorFactory instantiatorFactory, ObjectFactory objectFactory, DependencyMetaDataProvider dependencyMetaDataProvider,
-                              FileResolver fileResolver, ImmutableAttributesFactory immutableAttributesFactory, ProviderFactory providerFactory) {
+    public DepictPlugin(InstantiatorFactory instantiatorFactory,
+                        ObjectFactory objectFactory,
+                        DependencyMetaDataProvider dependencyMetaDataProvider,
+                        FileResolver fileResolver,
+                        ImmutableAttributesFactory immutableAttributesFactory,
+                        ProviderFactory providerFactory) {
         this.instantiatorFactory = instantiatorFactory;
         this.objectFactory = objectFactory;
         this.dependencyMetaDataProvider = dependencyMetaDataProvider;
@@ -60,6 +66,7 @@ public class DepictPlugin implements Plugin<Project> {
         this.providerFactory = providerFactory;
 
     }
+
     @Override
     public void apply(final Project project) {
         final MavenPublicationFactory mavenPublicationFactory = new MavenPublicationFactory(
@@ -68,6 +75,7 @@ public class DepictPlugin implements Plugin<Project> {
                 fileResolver,
                 project.getPluginManager(),
                 project.getExtensions());
+        // Gradle maven publication plugin
         final MavenPublication publication = mavenPublicationFactory.create("depict");
         publication.from(project.getComponents().getByName("java"));
         final DirectoryProperty buildDir = project.getLayout().getBuildDirectory();
@@ -94,7 +102,8 @@ public class DepictPlugin implements Plugin<Project> {
             }
         });
         ((MavenPublicationInternal) publication).setPomGenerator(generatorTask);
-        project.getTasks().register("depict-dependencies", DependenciesTask.class, new Action<DependenciesTask>() {
+
+        project.getTasks().register("depictDependencies", DependenciesTask.class, new Action<DependenciesTask>() {
             @Override
             public void execute(DependenciesTask task) {
                 task.dependsOn("generateMavenPomForDepict");
