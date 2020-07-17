@@ -1,4 +1,4 @@
-package net.unit8.depict.mojo;
+package net.unit8.depict.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.maven.artifact.Artifact;

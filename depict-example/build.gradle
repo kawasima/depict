@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.unit8.depict', name: 'depict-gradle-plugin', version: '0.1.0-SNAPSHOT'
+        classpath group: 'net.unit8.depict', name: 'depict-gradle-plugin', version: '0.2.0-SNAPSHOT'
     }
 }
 
@@ -13,10 +13,11 @@ group = 'net.unit8.depict.example'
 apply plugin: 'java'
 apply plugin: 'net.unit8.depict'
 
-task depictDependencies {//(type: net.unit8.depict.gradle.task.DependenciesTask) {
-    outputFile = file('hoge.json')
-}
+/*
+task depictDependencies {
 
+}
+*/
 task assembly {
     dependsOn('depictDependencies')
 }

@@ -6,8 +6,13 @@ buildscript {
     }
 }
 
+plugins {
+    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.12.0'
+}
+
 group = 'net.unit8.depict'
-version = '0.1.0-SNAPSHOT'
+version = '0.2.0-SNAPSHOT'
 
 apply plugin : 'java'
 apply plugin : 'maven-publish'
@@ -15,6 +20,22 @@ apply plugin : 'maven-publish'
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
+pluginBundle {
+    website = 'https://github.com/kawasima/depict'
+    vcsUrl = 'https://github.com/kawasima/depict.git'
+    tags = ['dependencies']
+}
+
+gradlePlugin {
+    plugins {
+        depictPlugin {
+            id = 'net.unit8.depict'
+            displayName = 'Plugin for depicting the project'
+            description = 'A plugin that depict the project'
+            implementationClass = 'net.unit8.depict.gradle.DepictPlugin'
+        }
+    }
+}
 dependencies {
     implementation gradleApi()
     implementation(group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.0')
@@ -25,7 +46,7 @@ dependencies {
     implementation(group: 'org.apache.maven.wagon', name: 'wagon-http', version: '2.8')
     implementation(group: 'org.apache.maven', name: 'maven-model-builder', version: '3.6.3')
     implementation(group: 'org.apache.maven', name: 'maven-compat', version: '3.6.3')
-    implementation(group: 'net.unit8.depict', name: 'depict-maven-plugin', version: '0.1.0-SNAPSHOT')
+    implementation(group: 'net.unit8.depict', name: 'depict-core', version: version)
 }
 
 repositories {

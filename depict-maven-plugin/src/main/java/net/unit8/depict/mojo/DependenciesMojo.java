@@ -2,6 +2,7 @@ package net.unit8.depict.mojo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import net.unit8.depict.model.DepictingProject;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;

@@ -1,4 +1,4 @@
-package net.unit8.depict.mojo;
+package net.unit8.depict.model;
 
 import org.codehaus.plexus.util.Base64;
 

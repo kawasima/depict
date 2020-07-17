@@ -1,7 +1,7 @@
 package net.unit8.depict.gradle.task;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.unit8.depict.mojo.DepictingProject;
+import net.unit8.depict.model.DepictingProject;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.repository.ArtifactRepositoryFactory;
 import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;
@@ -27,6 +27,8 @@ import java.net.URI;
 public class DependenciesTask extends DefaultTask {
     @OutputFile
     File outputFile;
+
+    private static File DEFAULT_OUTPUT_FILE = new File("depict.dependencies.json");
     private ObjectMapper mapper = new ObjectMapper();
 
     @TaskAction
@@ -54,6 +56,9 @@ public class DependenciesTask extends DefaultTask {
                     localRepository,
                     profileManager);
             DepictingProject depictingProject = new DepictingProject(project, projectBuilder, localRepository);
+            if (outputFile == null) {
+                outputFile = DEFAULT_OUTPUT_FILE;
+            }
             fos = new FileOutputStream(outputFile);
             mapper.writerWithDefaultPrettyPrinter().writeValue(fos, depictingProject);
         } catch (Exception e) {

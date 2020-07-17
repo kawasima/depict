@@ -4,7 +4,7 @@
 
     <groupId>net.unit8.depict</groupId>
     <artifactId>depict-parent</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>depict-parent</name>
@@ -20,6 +20,7 @@
 
     <modules>
         <module>depict-maven-plugin</module>
+        <module>depict-core</module>
     </modules>
 
     <scm>
