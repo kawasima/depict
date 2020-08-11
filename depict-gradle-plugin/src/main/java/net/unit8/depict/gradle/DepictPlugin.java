@@ -12,10 +12,7 @@ import org.gradle.api.internal.artifacts.configurations.DependencyMetaDataProvid
 import org.gradle.api.internal.attributes.ImmutableAttributesFactory;
 import org.gradle.api.internal.file.FileResolver;
 import org.gradle.api.model.ObjectFactory;
-import org.gradle.api.plugins.AppliedPlugin;
-import org.gradle.api.plugins.ExtensionContainer;
-import org.gradle.api.plugins.JavaPlatformPlugin;
-import org.gradle.api.plugins.PluginManager;
+import org.gradle.api.plugins.*;
 import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.publish.internal.versionmapping.DefaultVersionMappingStrategy;
 import org.gradle.api.publish.internal.versionmapping.VersionMappingStrategyInternal;
@@ -34,6 +31,7 @@ import org.gradle.api.tasks.TaskProvider;
 import org.gradle.internal.instantiation.InstantiatorFactory;
 import org.gradle.internal.reflect.Instantiator;
 import org.gradle.internal.typeconversion.NotationParser;
+import org.gradle.plugin.use.PluginDependencySpec;
 
 import javax.inject.Inject;
 import java.util.concurrent.Callable;
@@ -77,13 +75,16 @@ public class DepictPlugin implements Plugin<Project> {
                 project.getExtensions());
         // Gradle maven publication plugin
         final MavenPublication publication = mavenPublicationFactory.create("depict");
-        publication.from(project.getComponents().getByName("java"));
+
         final DirectoryProperty buildDir = project.getLayout().getBuildDirectory();
         TaskProvider<GenerateMavenPom> generatorTask = project.getTasks().register("generateMavenPomForDepict", GenerateMavenPom.class, new Action<GenerateMavenPom>() {
             @Override
             public void execute(final GenerateMavenPom generatePomTask) {
                 generatePomTask.setDescription("Generates the Maven POM file for publication 'depict'.");
-                generatePomTask.setGroup("net.unit8.depict");
+                publication.from(project.getComponents().getByName("java"));
+                if (publication.getGroupId() == null || publication.getGroupId().isEmpty()) {
+                    publication.setGroupId("net.unit8.depict");
+                }
                 MavenPom pom = publication.getPom();
                 generatePomTask.setPom(pom);
                 if (generatePomTask.getDestination() == null) {

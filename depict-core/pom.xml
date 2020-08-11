@@ -8,7 +8,7 @@
     <parent>
         <groupId>net.unit8.depict</groupId>
         <artifactId>depict-parent</artifactId>
-        <version>0.2.0</version>
+        <version>0.2.1-SNAPSHOT</version>
     </parent>
     <name>depict-core</name>
     <url>https://github.com/kawasima/depict.git</url>

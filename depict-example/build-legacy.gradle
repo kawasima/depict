@@ -1,0 +1,32 @@
+def javaProjects = [ project(':submodule') ]
+
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.unit8.depict:depict-gradle-plugin:0.2.1-SNAPSHOT"
+    }
+}
+
+allprojects {
+    group = 'net.unit8.depict.example'
+}
+
+configure(javaProjects) {
+    apply plugin: 'java'
+    apply plugin: 'net.unit8.depict'
+
+    task assembly {
+        dependsOn('depictDependencies')
+    }
+    dependencies {
+        //implementation group: 'org.apache.struts', name: 'struts2-core', version: 'latest.release'
+        implementation group: 'org.apache.struts', name: 'struts2-core', version: '2.5.18'
+    }
+}
