@@ -1,5 +1,3 @@
-def javaProjects = [ project(':submodule') ]
-
 buildscript {
     repositories {
         mavenLocal()
@@ -14,19 +12,10 @@ buildscript {
     }
 }
 
-allprojects {
-    group = 'net.unit8.depict.example'
-}
+group = 'net.unit8.depict.example'
+apply plugin: 'java'
+apply plugin: 'net.unit8.depict'
 
-configure(javaProjects) {
-    apply plugin: 'java'
-    apply plugin: 'net.unit8.depict'
-
-    task assembly {
-        dependsOn('depictDependencies')
-    }
-    dependencies {
-        //implementation group: 'org.apache.struts', name: 'struts2-core', version: 'latest.release'
-        implementation group: 'org.apache.struts', name: 'struts2-core', version: '2.5.18'
-    }
+task assembly {
+    dependsOn('depictDependencies')
 }

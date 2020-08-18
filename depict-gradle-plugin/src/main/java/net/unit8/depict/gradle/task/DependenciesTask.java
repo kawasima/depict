@@ -28,8 +28,8 @@ public class DependenciesTask extends DefaultTask {
     @OutputFile
     File outputFile;
 
-    private static File DEFAULT_OUTPUT_FILE = new File("depict.dependencies.json");
-    private ObjectMapper mapper = new ObjectMapper();
+    private static final File DEFAULT_OUTPUT_FILE = new File("depict.dependencies.json");
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @TaskAction
     public void dependencies() {
@@ -57,7 +57,8 @@ public class DependenciesTask extends DefaultTask {
                     profileManager);
             DepictingProject depictingProject = new DepictingProject(project, projectBuilder, localRepository);
             if (outputFile == null) {
-                outputFile = DEFAULT_OUTPUT_FILE;
+
+                outputFile = new File(getProject().getProjectDir(), DEFAULT_OUTPUT_FILE.getName());
             }
             fos = new FileOutputStream(outputFile);
             mapper.writerWithDefaultPrettyPrinter().writeValue(fos, depictingProject);

@@ -1,0 +1,19 @@
+plugins {
+    id "net.unit8.depict" version "0.2.1-SNAPSHOT" apply false
+}
+
+allprojects {
+}
+
+project(':sub1') {
+    apply plugin: 'java'
+    apply plugin: 'net.unit8.depict'
+
+    task assembly {
+        dependsOn('depictDependencies')
+    }
+
+    dependencies {
+        implementation group: 'org.apache.struts', name: 'struts2-core', version: '2.5.18'
+    }
+}
