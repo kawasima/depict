@@ -1,7 +1,5 @@
 # depict-gradle-plugin
 
-[日本語](./README.ja.md)
-
 ## requirements
 
 - Java6 or higher
@@ -23,4 +21,4 @@ task assembly {
 
 ```
 
-When you execute `mvn package`, the plugin writes all dependencies to a `depice.dependencies.json` file.
+When you execute `gradle assembly`, the plugin writes all dependencies to a `depice.dependencies.json` file.
