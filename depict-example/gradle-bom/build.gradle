@@ -1,0 +1,27 @@
+plugins {
+    id "java"
+    id "maven-publish"
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'net.unit8.depict' version '0.2.2'
+}
+
+repositories {
+    mavenLocal()
+}
+
+task assembly {
+    dependsOn('depictDependencies')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "net.unit8.depict.example:example-bom:0.1.0"
+    }
+}
+
+dependencies {
+    runtimeOnly files('libs/foo.jar')
+    runtimeOnly 'org.bouncycastle:bcprov-jdk15on:1.66'
+    implementation 'org.apache.struts:struts2-core'
+
+}

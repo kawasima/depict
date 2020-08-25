@@ -12,7 +12,7 @@ plugins {
 }
 
 group = 'net.unit8.depict'
-version = '0.2.1'
+version = '0.2.2'
 
 apply plugin : 'java'
 apply plugin : 'maven-publish'
@@ -46,7 +46,7 @@ dependencies {
     implementation(group: 'org.apache.maven.wagon', name: 'wagon-http', version: '2.8')
     implementation(group: 'org.apache.maven', name: 'maven-model-builder', version: '3.6.3')
     implementation(group: 'org.apache.maven', name: 'maven-compat', version: '3.6.3')
-    implementation(group: 'net.unit8.depict', name: 'depict-core', version: '0.2.1')
+    implementation(group: 'net.unit8.depict', name: 'depict-core', version: project.version)
 }
 
 repositories {

@@ -14,6 +14,7 @@ import org.gradle.api.internal.file.FileResolver;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.plugins.*;
 import org.gradle.api.provider.ProviderFactory;
+import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.internal.versionmapping.DefaultVersionMappingStrategy;
 import org.gradle.api.publish.internal.versionmapping.VersionMappingStrategyInternal;
 import org.gradle.api.publish.maven.MavenArtifact;
@@ -24,6 +25,7 @@ import org.gradle.api.publish.maven.internal.publication.DefaultMavenPublication
 import org.gradle.api.publish.maven.internal.publication.MavenPublicationInternal;
 import org.gradle.api.publish.maven.internal.publication.WritableMavenProjectIdentity;
 import org.gradle.api.publish.maven.internal.publisher.MutableMavenProjectIdentity;
+import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
 import org.gradle.api.publish.maven.tasks.GenerateMavenPom;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
@@ -75,6 +77,17 @@ public class DepictPlugin implements Plugin<Project> {
                 project.getExtensions());
         // Gradle maven publication plugin
         final MavenPublication publication = mavenPublicationFactory.create("depict");
+        project.getPlugins().withType(MavenPublishPlugin.class, new Action<MavenPublishPlugin>() {
+            @Override
+            public void execute(MavenPublishPlugin mavenPublishPlugin) {
+                project.getExtensions().configure(PublishingExtension.class, new Action<PublishingExtension>() {
+                    @Override
+                    public void execute(PublishingExtension publishingExtension) {
+                        publishingExtension.getPublications().add(publication);
+                    }
+                });
+            }
+        });
 
         final DirectoryProperty buildDir = project.getLayout().getBuildDirectory();
         TaskProvider<GenerateMavenPom> generatorTask = project.getTasks().register("generateMavenPomForDepict", GenerateMavenPom.class, new Action<GenerateMavenPom>() {
