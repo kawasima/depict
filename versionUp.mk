@@ -1,4 +1,4 @@
-all: pom examples
+all: pom gradle examples
 
 check-version:
 ifndef VERSION
@@ -10,7 +10,7 @@ pom: check-version
 
 gradle: check-version
 	cd depict-gradle-plugin && \
-		perl -pe "s/^version\s*=\s*['\"]([^'\"]+)['\"]/version = '${VERSION}'/" build.gradle
+		perl -i -pe "s/^version\s*=\s*['\"]([^'\"]+)['\"]/version = '${VERSION}'/" build.gradle
 
 examples: example-pom example-gradle
 

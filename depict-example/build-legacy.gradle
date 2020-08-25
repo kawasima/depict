@@ -8,7 +8,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "net.unit8.depict:depict-gradle-plugin:0.2.2-SNAPSHOT"
+        classpath "net.unit8.depict:depict-gradle-plugin:0.2.2"
     }
 }
 

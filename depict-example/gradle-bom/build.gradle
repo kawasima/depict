@@ -2,7 +2,7 @@ plugins {
     id "java"
     id "maven-publish"
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id 'net.unit8.depict' version '0.2.2-SNAPSHOT'
+    id 'net.unit8.depict' version '0.2.2'
 }
 
 repositories {
