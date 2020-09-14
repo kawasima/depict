@@ -1,10 +1,10 @@
 package net.unit8.depict.gradle;
 
+import groovy.util.Node;
 import net.unit8.depict.gradle.task.DependenciesTask;
-import org.gradle.api.Action;
-import org.gradle.api.NamedDomainObjectFactory;
-import org.gradle.api.Plugin;
-import org.gradle.api.Project;
+import org.gradle.api.*;
+import org.gradle.api.artifacts.repositories.ArtifactRepository;
+import org.gradle.api.artifacts.repositories.UrlArtifactRepository;
 import org.gradle.api.attributes.Usage;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.internal.artifacts.Module;
@@ -12,7 +12,10 @@ import org.gradle.api.internal.artifacts.configurations.DependencyMetaDataProvid
 import org.gradle.api.internal.attributes.ImmutableAttributesFactory;
 import org.gradle.api.internal.file.FileResolver;
 import org.gradle.api.model.ObjectFactory;
-import org.gradle.api.plugins.*;
+import org.gradle.api.plugins.AppliedPlugin;
+import org.gradle.api.plugins.ExtensionContainer;
+import org.gradle.api.plugins.JavaPlatformPlugin;
+import org.gradle.api.plugins.PluginManager;
 import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.internal.versionmapping.DefaultVersionMappingStrategy;
@@ -33,9 +36,11 @@ import org.gradle.api.tasks.TaskProvider;
 import org.gradle.internal.instantiation.InstantiatorFactory;
 import org.gradle.internal.reflect.Instantiator;
 import org.gradle.internal.typeconversion.NotationParser;
-import org.gradle.plugin.use.PluginDependencySpec;
 
 import javax.inject.Inject;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -82,8 +87,8 @@ public class DepictPlugin implements Plugin<Project> {
             public void execute(MavenPublishPlugin mavenPublishPlugin) {
                 project.getExtensions().configure(PublishingExtension.class, new Action<PublishingExtension>() {
                     @Override
-                    public void execute(PublishingExtension publishingExtension) {
-                        publishingExtension.getPublications().add(publication);
+                    public void execute(PublishingExtension extension) {
+                        extension.getPublications().add(publication);
                     }
                 });
             }
@@ -99,6 +104,29 @@ public class DepictPlugin implements Plugin<Project> {
                     publication.setGroupId("net.unit8.depict");
                 }
                 MavenPom pom = publication.getPom();
+
+                final List<URI> repositories = new ArrayList<URI>();
+                project.getRepositories().all(new Action<ArtifactRepository>() {
+                    @Override
+                    public void execute(ArtifactRepository repository) {
+                        if (repository instanceof UrlArtifactRepository) {
+                            repositories.add(((UrlArtifactRepository) repository).getUrl());
+                        }
+                    }
+                });
+                pom.withXml(new Action<XmlProvider>() {
+                    @Override
+                    public void execute(XmlProvider xmlProvider) {
+                        Node repositoriesNode = xmlProvider.asNode().appendNode("repositories");
+                        int repoNo = 0;
+                        for (URI uri : repositories) {
+                            Node repositoryNode = repositoriesNode.appendNode("repository");
+                            repositoryNode.appendNode("id", "repo-" + repoNo);
+                            repositoryNode.appendNode("url", uri.toASCIIString());
+                            repoNo++;
+                        }
+                    }
+                });
                 generatePomTask.setPom(pom);
                 if (generatePomTask.getDestination() == null) {
                     generatePomTask.setDestination(buildDir.file("publications/" + publication.getName() + "/pom-default.xml"));

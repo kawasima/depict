@@ -1,6 +1,12 @@
 plugins {
     id "java"
-    id 'net.unit8.depict' version '0.2.2'
+    id 'net.unit8.depict' version '0.2.3-SNAPSHOT'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" }
 }
 
 task assembly {
@@ -10,4 +16,5 @@ task assembly {
 dependencies {
     //implementation group: 'org.apache.struts', name: 'struts2-core', version: 'latest.release'
     implementation group: 'org.apache.struts', name: 'struts2-core', version: '2.5.18'
+    implementation 'org.springframework.data:spring-data-commons:2.3.3.RELEASE'
 }
