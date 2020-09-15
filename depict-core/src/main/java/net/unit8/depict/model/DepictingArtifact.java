@@ -61,7 +61,7 @@ public class DepictingArtifact implements Serializable {
     }
 
     public String getVersion() {
-        return version.toString();
+        return version;
     }
 
     public String getType() {

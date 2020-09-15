@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class SubResourceIntegrityHash {
     private static final int BUFFER_SIZE = 2048;
-    private Base64 base64 = new Base64();
+    private final Base64 base64 = new Base64();
 
     public String sha384(InputStream is) {
         byte[] buffer = new byte[BUFFER_SIZE];

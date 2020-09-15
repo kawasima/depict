@@ -16,9 +16,9 @@ import java.util.*;
  */
 public class DepictingProject implements Serializable {
     private static final long serialVersionUID = 8255692331693057698L;
-    private String name;
-    private String version;
-    private List<DepictingArtifact> depictingArtifacts;
+    private final String name;
+    private final String version;
+    private final List<DepictingArtifact> depictingArtifacts;
 
     public DepictingProject(MavenProject project, MavenProjectBuilder projectBuilder, ArtifactRepository localRepository) throws IOException, ProjectBuildingException {
         List remoteRepository = project.getRemoteArtifactRepositories();

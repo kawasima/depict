@@ -41,8 +41,8 @@ dependencies {
     implementation(group: 'org.apache.maven.resolver', name: 'maven-resolver-connector-basic', version: '1.4.2')
     implementation(group: 'org.apache.maven.resolver', name: 'maven-resolver-transport-http', version: '1.4.2')
     implementation(group: 'org.apache.maven.resolver', name: 'maven-resolver-impl', version: '1.4.2')
-    implementation(group: 'org.apache.maven', name: 'maven-core', version: '3.6.1')
-    implementation(group: 'org.apache.maven', name: 'maven-compat', version: '3.6.1')
+    implementation(group: 'org.apache.maven', name: 'maven-core', version: '3.6.3')
+    implementation(group: 'org.apache.maven', name: 'maven-compat', version: '3.6.3')
     implementation(group: 'net.unit8.depict', name: 'depict-core', version: project.version)
 }
 

@@ -11,7 +11,8 @@ import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.LegacySupport;
 import org.apache.maven.profiles.DefaultProfileManager;
 import org.apache.maven.profiles.ProfileManager;
-import org.apache.maven.project.*;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.repository.RepositorySystem;
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.codehaus.plexus.ContainerConfiguration;
@@ -21,8 +22,7 @@ import org.codehaus.plexus.PlexusConstants;
 import org.codehaus.plexus.classworlds.ClassWorld;
 import org.eclipse.aether.RepositorySystemSession;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.file.RegularFile;
-import org.gradle.api.provider.Provider;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 
@@ -38,10 +38,16 @@ public class DependenciesTask extends DefaultTask {
     private static final File DEFAULT_OUTPUT_FILE = new File("depict.dependencies.json");
     private final ObjectMapper mapper = new ObjectMapper();
 
+    @InputFile
+    public File getPom() {
+        return getProject().getLayout().getBuildDirectory().file("publications/depict/pom-default.xml")
+                .get()
+                .getAsFile();
+    }
     @TaskAction
     public void dependencies() {
         URI localRepositoryURL = getProject().getRepositories().mavenLocal().getUrl();
-        Provider<RegularFile> pom = getProject().getLayout().getBuildDirectory().file("publications/depict/pom-default.xml");
+
         FileOutputStream fos = null;
         try {
             // create a Plexus container
@@ -70,7 +76,7 @@ public class DependenciesTask extends DefaultTask {
 
             ProfileManager profileManager = new DefaultProfileManager(container);
 
-            MavenProject project = projectBuilder.buildWithDependencies(pom.get().getAsFile(),
+            MavenProject project = projectBuilder.buildWithDependencies(getPom(),
                     localRepository,
                     profileManager);
             DepictingProject depictingProject = new DepictingProject(project, projectBuilder, localRepository);
