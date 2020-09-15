@@ -43,13 +43,25 @@ public class DependenciesMojo extends AbstractMojo {
      */
     private String outputFile;
 
+    /**
+     * Skip this goal
+     *
+     * @parameter expression="${depict.dependencies.skip}" default-value="false"
+     */
+    private boolean skip;
+
     public void execute() throws MojoExecutionException {
+        if (skip) {
+            getLog().info("Output dependencies is skipped.");
+            return;
+        }
         ObjectMapper mapper = new ObjectMapper();
         FileOutputStream fos = null;
         try {
             DepictingProject depictingProject = new DepictingProject(project, projectBuilder, localRepository);
             fos = new FileOutputStream(outputFile);
             mapper.writerWithDefaultPrettyPrinter().writeValue(fos, depictingProject);
+            getLog().info("Output dependencies to " + outputFile);
         } catch (IOException e) {
             throw new MojoExecutionException("JSON serialization error", e);
         } catch (ProjectBuildingException e) {
