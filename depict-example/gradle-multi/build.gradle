@@ -1,5 +1,5 @@
 plugins {
-    id 'net.unit8.depict' version '0.2.3-SNAPSHOT' apply false
+    id 'net.unit8.depict' version '0.2.3' apply false
 }
 
 allprojects {

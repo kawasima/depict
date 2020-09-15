@@ -8,7 +8,7 @@
     <parent>
         <groupId>net.unit8.depict</groupId>
         <artifactId>depict-parent</artifactId>
-        <version>0.2.3-SNAPSHOT</version>
+        <version>0.2.3</version>
     </parent>
     <name>depict-maven-plugin</name>
     <url>https://github.com/kawasima/depict.git</url>

@@ -8,7 +8,7 @@
     <version>0.1.0-SNAPSHOT</version>
 
     <properties>
-      <depict.version>0.2.3-SNAPSHOT</depict.version>
+      <depict.version>0.2.3</depict.version>
     </properties>
 
     <build>

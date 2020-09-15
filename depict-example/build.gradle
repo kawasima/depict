@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id 'net.unit8.depict' version '0.2.3-SNAPSHOT'
+    id 'net.unit8.depict' version '0.2.3'
 }
 
 repositories {
